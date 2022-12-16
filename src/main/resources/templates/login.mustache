@@ -1,0 +1,24 @@
+{{>layout/header}}
+
+<div id="login-form">
+    <div id="login-title">로그인하세요!</div>
+ <!--<button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8080/api/user/kakao/callback&response_type=code'">
+        카카오로 로그인하기
+    </button> -->
+    <button id="login-id-btn" onclick="location.href='/api/user/signup'">
+        회원 가입하기
+    </button>
+    <form  method="POST" action="/api/user/login" >
+        <div class="login-id-label">아이디</div>
+        <input type="text" name="username" class="login-input-box">
+
+        <div class="login-id-label">비밀번호</div>
+        <input type="password" name="password" class="login-input-box">
+
+        <button id="login-id-submit">로그인</button>
+    </form>
+    <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
+</div>
+
+
+{{>layout/footer}}
