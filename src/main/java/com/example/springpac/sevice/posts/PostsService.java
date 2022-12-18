@@ -49,19 +49,32 @@ public class PostsService {
     }
 
     @Transactional
-    public  Long update(Long id, PostsUpdateRequestDto requestDto){
-        Posts posts = postsRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id ="+id));
+    public  Long update(Long id, PostsUpdateRequestDto requestDto, HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
+            Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
 
-        posts.update(requestDto.getTitle(),requestDto.getContent());
-
-        return id;
+            if ((user.getUsername().equals(requestDto.getAuthor()))){   //첫번재가 토큰에서 가져온 유저네임이고 ... 이건 작성글의 그거자나 리퀘스ㅡ트
+                posts.update(requestDto.getTitle(), requestDto.getContent());
+        }
+            return id;
+        } else
+            return null;
     }
 
-    public PostsResponseDto findById (Long id){
-        Posts entity = postsRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id ="+id));
+            public PostsResponseDto findById (Long id){
+                Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
 
-        return new PostsResponseDto(entity);
-    }
+                return new PostsResponseDto(entity);
+            }
+
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(){

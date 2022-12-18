@@ -43,6 +43,7 @@ let main = {
     update: function () {
         let data = {
             title: $('#title').val(),
+            author:$('#author').val(),
             content: $('#content').val()
         };
 
