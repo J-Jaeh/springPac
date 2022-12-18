@@ -40,7 +40,7 @@ public class PostsService {
 
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
 
-            Posts posts = postsRepository.saveAndFlush(new Posts(requestDto,user.getId()));
+            Posts posts = postsRepository.saveAndFlush(new Posts(requestDto,user.getId(),user.getUsername()));
 
             return new PostsResponseDto(posts);
 

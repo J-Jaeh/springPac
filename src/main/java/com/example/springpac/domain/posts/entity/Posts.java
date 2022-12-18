@@ -30,10 +30,10 @@ public class Posts extends BaseTimeEntity {
     private Long userId;
 
      //빌더를 생성자 위에 적용할경우... 생성자에 포함된 필드만 빌더에 포함..
-    public  Posts(PostsSaveRequestDto requestDto, Long userId){
+    public  Posts(PostsSaveRequestDto requestDto, Long userId, String username){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.author = requestDto.getAuthor();
+        this.author = username;
         this.userId = userId;
     }
 
