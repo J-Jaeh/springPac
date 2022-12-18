@@ -7,15 +7,17 @@ import com.example.springpac.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto){
+    public PostsResponseDto save(@RequestBody PostsSaveRequestDto requestDto, HttpServletRequest request){
 
-        return  postsService.save(requestDto);
+        return  postsService.save(requestDto,request);
     }
 
     @PutMapping("/api/v1/posts/{id}")

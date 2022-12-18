@@ -22,12 +22,17 @@ let main = {
             content: $('#content').val()
         };
 
+        const  auth = getToken();
+
         $.ajax({
             type: 'POST',
             url: '/api/v1/posts',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            beforeSend: function (xhr){
+                xhr.setRequestHeader("Authorization", auth);
+            },
         }).done(function () {
             alert('글이 등록되었습니다.');
             window.location.href = '/';
@@ -98,7 +103,7 @@ $(document).ready(function (){
 
     }else {
         $('#logout').hide();
-        $('#save-post').hide();
+        $('#save-post').show();
         $('#sign-text').show();
         $('#login-text').show();
 
