@@ -1,5 +1,7 @@
-package com.example.springpac.domain.posts.entity;
+package com.example.springpac.domain.user.entity;
 
+import com.example.springpac.domain.posts.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +10,9 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity(name = "users")
-public class User {
+
+
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +29,29 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    /*@Column
+    private String picture;*/
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;
+    private Role role;
 
-    public User(String username, String password, String email, UserRoleEnum role) {
+    @Builder
+    public User(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+   /* public String getRoleKey(){
+        return this.role.getKey();  //구글
+    }*/
+
+    public User update(String name/*,String picture*/){
+        this.username = name;
+       // this.picture = picture;
+
+        return this;
     }
 }

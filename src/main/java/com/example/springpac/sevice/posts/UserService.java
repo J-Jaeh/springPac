@@ -4,16 +4,20 @@ package com.example.springpac.sevice.posts;
 
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.web.dto.LoginRequestDto;
+import com.example.springpac.web.dto.LoginResponseDto;
+import com.example.springpac.web.dto.PostsListResponseDto;
 import com.example.springpac.web.dto.SignupRequestDto;
-import com.example.springpac.domain.posts.entity.User;
-import com.example.springpac.domain.posts.entity.UserRoleEnum;
-import com.example.springpac.domain.posts.repository.UserRepository;
+import com.example.springpac.domain.user.entity.User;
+import com.example.springpac.domain.user.entity.Role;
+import com.example.springpac.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,12 +40,12 @@ public class UserService {
         }
 
         // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.USER;
+        Role role = Role.GUEST;
         if (signupRequestDto.isAdmin()) {
             if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
                 throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
             }
-            role = UserRoleEnum.ADMIN;
+            role = Role.USER;
         }
 
         User user = new User(username, password, email, role);
@@ -77,18 +81,11 @@ public class UserService {
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+        //response.addHeader("userName", user.getUsername());
 
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
 
     }
 
-   /* public String getUser(LoginRequestDto loginRequestDto) {
-        String username = loginRequestDto.getUsername();
-
-        // 사용자 확인
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> null);
-        return user.getUsername();
-    }*/
 
 }

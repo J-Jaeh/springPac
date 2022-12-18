@@ -2,21 +2,28 @@ package com.example.springpac.web.controller;
 
 
 
+import com.example.springpac.jwt.JwtUtil;
+import com.example.springpac.sevice.posts.PostsService;
 import com.example.springpac.sevice.posts.UserService;
 import com.example.springpac.web.dto.LoginRequestDto;
 import com.example.springpac.web.dto.SignupRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
+
+    private final JwtUtil jwtUtil;
+    private final PostsService postsService;
 
     private final UserService userService;
     @GetMapping("/signup")
@@ -45,4 +52,5 @@ public class UserController {
         userService.login(loginRequestDto, response);
         return "success";
     }
+
 }

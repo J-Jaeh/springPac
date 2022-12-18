@@ -12,9 +12,8 @@ let main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
-        $('#login-id-submit').on('click', function () {
-            _this.login();
-        })
+
+
     },
     save: function () {
         let data = {
@@ -72,32 +71,94 @@ let main = {
             alert(JSON.stringify(error));
         });
     },
-    login : function (){
-
-        let username = $('#login-id').val();
-        let password = $('#login-password').val();
-
-        $.ajax({
-            type: "POST",
-            url: `/api/user/login`,
-            contentType: "application/json",
-            data: JSON.stringify({username: username, password: password}),
-            success: function (response, status, xhr) {
-                if(response === 'success') {
-                    let host = window.location.host;
-                    let url = host + '/';
-
-                    document.cookie =
-                        'Authorization' + '=' + xhr.getResponseHeader('Authorization') + ';path=/';
-                    window.location.href = 'http://' + url;
-                } else {
-                    alert('로그인에 실패하셨습니다. 다시 로그인해 주세요.')
-                    window.location.reload();
-                }
-            }
-        })
-    }
-
 };
 
+
+
+let targetId;
+
+const href = location.href;
+const queryString = href.substring(href.indexOf("?")+1)
+
+if (queryString === 'error') {
+    const errorDiv = document.getElementById('login-failed');
+    errorDiv.style.display = 'block';
+}
+
+$(document).ready(function (){
+    const auth = getToken();
+
+    if(auth !==''){
+
+        $('#logout').show();
+        $('#save-post').show();
+        $('#sign-text').hide();
+        $('#login-text').hide();
+
+
+    }else {
+        $('#logout').hide();
+        $('#save-post').hide();
+        $('#sign-text').show();
+        $('#login-text').show();
+
+    }
+})
+function  getToken() {
+    let cName = 'Authorization' + '=';
+    let cookieData = document.cookie;
+    let cookie = cookieData.indexOf('Authorization');
+    let auth = '';
+    if(cookie !== -1){
+        cookie += cName.length;
+        let end = cookieData.indexOf(';', cookie);
+        if(end === -1)end = cookieData.length;
+        auth = cookieData.substring(cookie, end);
+    }
+    return auth;
+}
+/// 생각해볼 사항 ... 로그인 을 원래대로 되돌려보자 ~  뭔진 모르니까
+
+
+function login() {
+
+    let username = $('#login-id').val();
+    let password = $('#login-password').val();
+
+    if (username == '') {
+        alert('ID를 입력해주세요');
+        return;
+    } else if(password== '') {
+        alert('비밀번호를 입력해주세요');
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: `/api/user/login`,
+        contentType: "application/json",
+        data: JSON.stringify({username: username, password: password}),
+        success: function (response, status, xhr) {
+            if(response === 'success') {
+                let host = window.location.host;
+                let url = host + '/';
+
+                document.cookie =
+                    'Authorization' + '=' + xhr.getResponseHeader('Authorization') + ';path=/';
+                window.location.href = 'http://' + url;
+            } else {
+                alert('로그인에 실패하셨습니다. 다시 로그인해 주세요.')
+                window.location.reload();
+            }
+        }
+    })
+}
+
 main.init();
+
+function logout() {
+    // 토큰 값 ''으로 덮어쓰기
+    document.cookie =
+        'Authorization' + '=' + '' + ';path=/';
+    window.location.reload();
+}

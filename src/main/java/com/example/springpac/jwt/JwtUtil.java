@@ -3,7 +3,7 @@ package com.example.springpac.jwt;
 
 
 
-import com.example.springpac.domain.posts.entity.UserRoleEnum;
+import com.example.springpac.domain.user.entity.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
@@ -50,7 +50,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username, UserRoleEnum role) {
+    public String createToken(String username, Role role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
