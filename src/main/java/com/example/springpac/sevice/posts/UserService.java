@@ -78,5 +78,17 @@ public class UserService {
         }
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+
+
     }
+
+   /* public String getUser(LoginRequestDto loginRequestDto) {
+        String username = loginRequestDto.getUsername();
+
+        // 사용자 확인
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> null);
+        return user.getUsername();
+    }*/
+
 }
