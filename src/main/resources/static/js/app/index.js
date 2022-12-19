@@ -68,6 +68,7 @@ let main = {
     },
     delete: function () {
         let id = $('#id').val();
+        let username = $('#author').val();
 
         const auth = getToken();
 
@@ -76,6 +77,7 @@ let main = {
             url: '/api/v1/posts/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({username: username}),
             beforeSend: function (xhr){
                 xhr.setRequestHeader("Authorization", auth);
             },
@@ -88,7 +90,7 @@ let main = {
     },
 };
 
-
+main.init();
 
 
 
@@ -153,6 +155,7 @@ function login() {
         url: `/api/user/login`,
         contentType: "application/json",
         data: JSON.stringify({username: username, password: password}),
+
         success: function (response, status, xhr) {
             if(response === 'success') {
                 let host = window.location.host;
@@ -169,7 +172,7 @@ function login() {
     })
 }
 
-main.init();
+
 
 function logout() {
     // 토큰 값 ''으로 덮어쓰기

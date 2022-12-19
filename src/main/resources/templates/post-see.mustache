@@ -23,8 +23,45 @@
             </div>
         </form>
         <a href="/" role="button" class="btn btn-secondary">취소</a>
-        <a href="/posts/update/{{see.id}}"  role="button" class="btn btn-secondary">수정 하기</a>
+        <a href="/posts/update/{{see.id}}"  role="button" class="btn btn-secondary"> 게시글 수정 하기</a>
+
+
     </div>
 </div>
 
+<div class="form-group">
+    <label for="content"> 댓글</label>
+    <textarea class="form-control" id="comment"  >{{see.content}} </textarea>
+    <a href="/posts/comment/{{see.id}}"  role="button" class="btn btn-secondary"> 댓글등록</a>
+</div>
+
+<div>
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>코멘트번호</th>
+            <th>코멘트</th>
+            <th>작성자</th>
+            <th>최종수정일</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#comment}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{commentation}}</td>
+                <td>{{author}}</td>
+                <td>{{modifiedDate}}</td>
+                <th><a>수정</a>></th>
+                <th><a>삭제</a></th>
+            </tr>
+        {{/comment}}
+        </tbody>
+    </table>
+</div>
+
+<!-- 코멘트들어갈 양식이 필요함  코맨트는 리스트형식으로 저장하고 게시글 별로 등록해줄예정 받아야되는값
+게시글 id + 코멘트id +-->
 {{>layout/footer}}

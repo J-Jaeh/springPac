@@ -3,10 +3,8 @@ package com.example.springpac.sevice.posts;
 
 
 import com.example.springpac.jwt.JwtUtil;
-import com.example.springpac.web.dto.LoginRequestDto;
-import com.example.springpac.web.dto.LoginResponseDto;
-import com.example.springpac.web.dto.PostsListResponseDto;
-import com.example.springpac.web.dto.SignupRequestDto;
+import com.example.springpac.web.dto.login.LoginRequestDto;
+import com.example.springpac.web.dto.login.SignupRequestDto;
 import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.domain.user.entity.Role;
 import com.example.springpac.domain.user.repository.UserRepository;
@@ -15,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,22 +47,6 @@ public class UserService {
         User user = new User(username, password, email, role);
         userRepository.save(user);
     }
-
-   /* @Transactional(readOnly = true)
-    public void login(LoginRequestDto loginRequestDto) {
-        String username = loginRequestDto.getUsername();
-        String password = loginRequestDto.getPassword();
-
-        // 사용자 확인
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
-        );
-
-        // 비밀번호 확인
-        if(!user.getPassword().equals(password)){
-            throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-    }*/
     @Transactional(readOnly = true)
     public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
@@ -84,6 +64,7 @@ public class UserService {
         //response.addHeader("userName", user.getUsername());
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+
 
     }
 

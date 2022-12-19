@@ -1,8 +1,7 @@
 package com.example.springpac.domain.posts.entity;
 
-import com.example.springpac.web.dto.PostsSaveRequestDto;
-import com.example.springpac.web.dto.PostsUpdateRequestDto;
-import lombok.Builder;
+import com.example.springpac.web.dto.post.PostsSaveRequestDto;
+import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

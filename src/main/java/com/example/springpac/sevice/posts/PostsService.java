@@ -5,10 +5,7 @@ import com.example.springpac.domain.posts.repository.PostsRepository;
 import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
-import com.example.springpac.web.dto.PostsListResponseDto;
-import com.example.springpac.web.dto.PostsResponseDto;
-import com.example.springpac.web.dto.PostsSaveRequestDto;
-import com.example.springpac.web.dto.PostsUpdateRequestDto;
+import com.example.springpac.web.dto.post.*;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,7 +58,6 @@ public class PostsService {
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
             Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
 
-
            if ((user.getUsername().equals(requestDto.getAuthor()))){   //첫번재가 레포에서가져욘 이름...  비교대상이 클래임
                posts.update(requestDto);
 
@@ -84,7 +80,7 @@ public class PostsService {
     }
 
     @Transactional
-    public void delete(Long id,HttpServletRequest request) {
+    public void delete(Long id, HttpServletRequest request , PostDeleteRequestDto requestDto) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
         if (token != null) {
@@ -93,11 +89,8 @@ public class PostsService {
             } else {
                 throw new IllegalArgumentException("Token Error");
             }
-            Posts posts = postsRepository.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-
-            if (posts.getAuthor().equals(claims.getSubject())){
-                postsRepository.delete(posts);
+            if (requestDto.getUsername().equals(claims.getSubject())){
+                postsRepository.delete(postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id)));
             }
         }
     }

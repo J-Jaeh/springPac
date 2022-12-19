@@ -2,9 +2,9 @@ package com.example.springpac.contoroller;
 
 import com.example.springpac.domain.posts.entity.Posts;
 import com.example.springpac.domain.posts.repository.PostsRepository;
-import com.example.springpac.web.dto.PostsSaveRequestDto;
+import com.example.springpac.web.dto.post.PostsSaveRequestDto;
 
-import com.example.springpac.web.dto.PostsUpdateRequestDto;
+import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

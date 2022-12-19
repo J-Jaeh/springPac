@@ -1,4 +1,4 @@
-package com.example.springpac.web.dto;
+package com.example.springpac.web.dto.post;
 
 import com.example.springpac.domain.posts.entity.Posts;
 import lombok.Builder;

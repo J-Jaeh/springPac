@@ -1,19 +1,13 @@
 package com.example.springpac.web.controller;
 
-import javax.servlet.http.HttpSession;
-
-import com.example.springpac.config.auth.dto.SessionUser;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.sevice.posts.PostsService;
-import com.example.springpac.sevice.posts.UserService;
-import com.example.springpac.web.dto.PostsResponseDto;
+import com.example.springpac.web.dto.post.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
 @Controller
