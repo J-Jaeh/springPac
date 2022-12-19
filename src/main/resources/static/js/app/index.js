@@ -69,11 +69,16 @@ let main = {
     delete: function () {
         let id = $('#id').val();
 
+        const auth = getToken();
+
         $.ajax({
             type: 'DELETE',
             url: '/api/v1/posts/' + id,
             dataType: 'json',
-            contentType: 'application/json; charset=utf-8'
+            contentType: 'application/json; charset=utf-8',
+            beforeSend: function (xhr){
+                xhr.setRequestHeader("Authorization", auth);
+            },
         }).done(function () {
             alert('글이 삭제되었습니다.');
             window.location.href = '/';
@@ -85,7 +90,7 @@ let main = {
 
 
 
-let targetId;
+
 
 const href = location.href;
 const queryString = href.substring(href.indexOf("?")+1)

@@ -84,11 +84,22 @@ public class PostsService {
     }
 
     @Transactional
-    public void delete(Long id){
-        Posts posts = postsRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+    public void delete(Long id,HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+            Posts posts = postsRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
-        postsRepository.delete(posts);
+            if (posts.getAuthor().equals(claims.getSubject())){
+                postsRepository.delete(posts);
+            }
+        }
     }
 
 
