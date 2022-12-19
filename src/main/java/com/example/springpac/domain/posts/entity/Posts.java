@@ -1,6 +1,7 @@
 package com.example.springpac.domain.posts.entity;
 
 import com.example.springpac.web.dto.PostsSaveRequestDto;
+import com.example.springpac.web.dto.PostsUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,8 +38,8 @@ public class Posts extends BaseTimeEntity {
         this.userId = userId;
     }
 
-    public void update(String title, String content){
-        this.title =title;
-        this.content=content;
+    public void update(PostsUpdateRequestDto requestDto){
+        this.title =requestDto.getTitle();
+        this.content=requestDto.getContent();
     }
 }

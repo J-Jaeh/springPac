@@ -22,7 +22,7 @@ let main = {
             content: $('#content').val()
         };
 
-        const  auth = getToken();
+        const auth = getToken();
 
         $.ajax({
             type: 'POST',
@@ -46,6 +46,7 @@ let main = {
             author:$('#author').val(),
             content: $('#content').val()
         };
+        const auth = getToken();
 
         let id = $('#id').val();
 
@@ -54,7 +55,10 @@ let main = {
             url: '/api/v1/posts/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            beforeSend: function (xhr){
+                xhr.setRequestHeader("Authorization", auth);
+            },
         }).done(function () {
             alert('글이 수정되었습니다.');
             window.location.href = '/';

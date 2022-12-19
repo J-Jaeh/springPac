@@ -61,12 +61,14 @@ public class PostsService {
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
             Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
 
-            if ((user.getUsername().equals(requestDto.getAuthor()))){   //첫번재가 토큰에서 가져온 유저네임이고 ... 이건 작성글의 그거자나 리퀘스ㅡ트
-                posts.update(requestDto.getTitle(), requestDto.getContent());
-        }
-            return id;
+
+           if ((user.getUsername().equals(requestDto.getAuthor()))){   //첫번재가 레포에서가져욘 이름...  비교대상이 클래임
+               posts.update(requestDto);
+
+          }
+            return posts.getId();
         } else
-            return null;
+            return id;
     }
 
             public PostsResponseDto findById (Long id){
@@ -78,7 +80,7 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(){
-        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+        return postsRepository.findAllByOrderByCreatedDateDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
     }
 
     @Transactional
