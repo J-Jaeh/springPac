@@ -31,7 +31,6 @@ public class User extends BaseTimeEntity {
 
     /*@Column
     private String picture;*/
-
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Role role;

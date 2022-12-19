@@ -45,6 +45,7 @@ public class PostsService {
         return null;
     }
 
+
     @Transactional
     public  Long update(Long id, PostsUpdateRequestDto requestDto, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
