@@ -8,12 +8,15 @@ import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
+import com.example.springpac.web.dto.comment.CommentsListResponseDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -47,5 +50,10 @@ public class CommentService {
 
         } else
             return null;
+    }
+
+    @Transactional(readOnly = true)
+    public List<CommentsListResponseDto> findByIdAndComment(Long postId){
+        return commentRepository.findByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
     }
 }

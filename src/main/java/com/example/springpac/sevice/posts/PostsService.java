@@ -1,5 +1,6 @@
 package com.example.springpac.sevice.posts;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import com.example.springpac.domain.posts.entity.Posts;
 import com.example.springpac.domain.posts.repository.PostsRepository;
 import com.example.springpac.domain.user.entity.User;
@@ -7,6 +8,7 @@ import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.web.dto.post.*;
 import io.jsonwebtoken.Claims;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @RequiredArgsConstructor
 @Service
 public class PostsService {
@@ -42,7 +45,7 @@ public class PostsService {
             return new PostsResponseDto(posts);
 
         }else
-        return null;
+            throw new RuntimeException("저장 실패란다!");
     }
 
 
@@ -62,10 +65,12 @@ public class PostsService {
            if ((user.getUsername().equals(requestDto.getAuthor()))){   //첫번재가 레포에서가져욘 이름...  비교대상이 클래임
                posts.update(requestDto);
 
-          }
-            return posts.getId();
+          }else {
+               throw new RuntimeException("이름이달라서 실패란다!");
+           }
+           return posts.getId();
         } else
-            return id;
+             throw new RuntimeException("로그인을 안해서 실패란다!");
     }
 
             public PostsResponseDto findById (Long id){
@@ -92,8 +97,10 @@ public class PostsService {
             }
             if (requestDto.getUsername().equals(claims.getSubject())){
                 postsRepository.delete(postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id)));
-            }
-        }
+            }else
+                throw new RuntimeException("글 작성자가 아니라서 실패란다!");
+        }else
+            throw new RuntimeException("삭제 실패란다!");
     }
 
 

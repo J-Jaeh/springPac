@@ -35,13 +35,13 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-        // 사용자 ROLE 확인
-        Role role = Role.GUEST;
+
+       Role role = Role.USER;
         if (signupRequestDto.isAdmin()) {
             if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
                 throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
             }
-            role = Role.USER;
+            role = Role.ADMIN;
         }
 
         User user = new User(username, password, email, role);

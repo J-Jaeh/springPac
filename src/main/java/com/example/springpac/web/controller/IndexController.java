@@ -1,6 +1,7 @@
 package com.example.springpac.web.controller;
 
 import com.example.springpac.jwt.JwtUtil;
+import com.example.springpac.sevice.posts.CommentService;
 import com.example.springpac.sevice.posts.PostsService;
 import com.example.springpac.web.dto.post.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class IndexController {
     private final PostsService postsService;
+    private  final CommentService commentService;
     private final JwtUtil jwtUtil;
 
 
@@ -26,6 +28,13 @@ public class IndexController {
 
         return "index";
 
+    }
+    @GetMapping("/api/v1/comment/{id}")
+    public String showComment(Model model,@PathVariable Long id){
+
+        model.addAttribute("comment",commentService.findByIdAndComment(id));
+
+        return "post-see";
     }
    /* @GetMapping("/")
     public ModelAndView index(){

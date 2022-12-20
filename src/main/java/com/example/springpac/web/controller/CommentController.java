@@ -6,9 +6,8 @@ import com.example.springpac.sevice.posts.CommentService;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,10 +17,17 @@ public class CommentController  {
 
     private  final CommentService commentService;
 
-    @PostMapping("api/v1/comment/save")
+    @PostMapping("/api/v1/comment/save")
     public CommentResponseDto save(@RequestBody CommentSaveRequestDto requestDto, HttpServletRequest request){
 
         return commentService.save(requestDto,request);
     }
+      //인덱스 컨트롤러로 댓글조회 넘김
+    /*@GetMapping("/api/v1/comment/{id}")
+    public String showComment(Model model,@PathVariable Long id){
+        model.addAttribute("comment",commentService.findByIdAndComment(id));
+
+        return "post-see";
+    }*/
 
 }
