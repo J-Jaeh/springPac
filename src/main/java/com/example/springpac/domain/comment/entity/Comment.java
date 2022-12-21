@@ -2,6 +2,8 @@ package com.example.springpac.domain.comment.entity;
 
 
 import com.example.springpac.domain.posts.entity.BaseTimeEntity;
+import com.example.springpac.domain.posts.entity.Posts;
+import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +32,12 @@ public class Comment  extends BaseTimeEntity {
 
     @Column
     private Long userId; //댓글 작성자를 알기 위한
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POST_ID", nullable = false)
+    private Posts posts;
+
 
     public Comment(CommentSaveRequestDto requestDto,Long userId,String username){
         this.comment = requestDto.getComment();

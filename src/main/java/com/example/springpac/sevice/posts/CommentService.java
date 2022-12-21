@@ -53,7 +53,7 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<CommentsListResponseDto> findByIdAndComment(Long postId){
-        return commentRepository.findByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+    public List<CommentsListResponseDto> findAllByPostIdOrderByCreatedDateDesc(Long postId){
+        return commentRepository.findAllByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
     }
 }

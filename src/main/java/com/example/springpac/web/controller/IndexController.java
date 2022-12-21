@@ -3,6 +3,7 @@ package com.example.springpac.web.controller;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.sevice.posts.CommentService;
 import com.example.springpac.sevice.posts.PostsService;
+import com.example.springpac.web.dto.comment.CommentsListResponseDto;
 import com.example.springpac.web.dto.post.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,10 +30,10 @@ public class IndexController {
         return "index";
 
     }
-    @GetMapping("/api/v1/comment/{id}")
-    public String showComment(Model model,@PathVariable Long id){
+    @GetMapping("/api/v1/comment/{postId}")
+    public String showComment(Model model,@PathVariable Long postId){
 
-        model.addAttribute("comment",commentService.findByIdAndComment(id));
+        model.addAttribute("comments",commentService.findAllByPostIdOrderByCreatedDateDesc(postId));
 
         return "post-see";
     }

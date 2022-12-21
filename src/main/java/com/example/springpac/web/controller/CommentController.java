@@ -22,7 +22,7 @@ public class CommentController  {
 
         return commentService.save(requestDto,request);
     }
-      //인덱스 컨트롤러로 댓글조회 넘김
+      //인덱스 컨트롤러로
     /*@GetMapping("/api/v1/comment/{id}")
     public String showComment(Model model,@PathVariable Long id){
         model.addAttribute("comment",commentService.findByIdAndComment(id));

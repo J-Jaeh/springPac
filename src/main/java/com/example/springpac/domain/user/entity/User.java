@@ -1,11 +1,15 @@
 package com.example.springpac.domain.user.entity;
 
+import com.example.springpac.domain.comment.entity.Comment;
 import com.example.springpac.domain.posts.entity.BaseTimeEntity;
+import com.example.springpac.domain.posts.entity.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -34,6 +38,10 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user",cascade =CascadeType.REMOVE, orphanRemoval = true)
+    private final List<Posts> postsList = new ArrayList<>();
+
 
     @Builder
     public User(String username, String password, String email, Role role) {

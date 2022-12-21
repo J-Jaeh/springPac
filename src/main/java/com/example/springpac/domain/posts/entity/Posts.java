@@ -1,5 +1,7 @@
 package com.example.springpac.domain.posts.entity;
 
+import com.example.springpac.domain.comment.entity.Comment;
+import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.web.dto.post.PostsSaveRequestDto;
 import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import lombok.Getter;
@@ -8,6 +10,8 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,6 +32,13 @@ public class Posts extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "post", cascade =CascadeType.REMOVE, orphanRemoval = true)
+    private final List<Comment> commentList = new ArrayList<>();
 
      //빌더를 생성자 위에 적용할경우... 생성자에 포함된 필드만 빌더에 포함..
     public  Posts(PostsSaveRequestDto requestDto, Long userId, String username){
