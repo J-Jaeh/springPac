@@ -3,6 +3,7 @@ package com.example.springpac.web.controller;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.sevice.posts.CommentService;
 import com.example.springpac.sevice.posts.PostsService;
+import com.example.springpac.web.dto.CommentAndPostResponseDto;
 import com.example.springpac.web.dto.comment.CommentsListResponseDto;
 import com.example.springpac.web.dto.post.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +31,13 @@ public class IndexController {
         return "index";
 
     }
-    @GetMapping("/api/v1/comment/{postId}")
+   /* @GetMapping("/api/v1/comment/{postId}")
     public String showComment(Model model,@PathVariable Long postId){
 
         model.addAttribute("comments",commentService.findAllByPostIdOrderByCreatedDateDesc(postId));
 
         return "post-see";
-    }
+    }*/
    /* @GetMapping("/")
     public ModelAndView index(){
         return new ModelAndView("index");
@@ -49,18 +50,27 @@ public class IndexController {
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id,Model model){
-        PostsResponseDto dto = postsService.findById(id);
+       CommentAndPostResponseDto dto = postsService.findById(id);
+        /*PostsResponseDto dto = postsService.findById(id);*/
         model.addAttribute("post",dto);
         return "posts-update";
     }
     @GetMapping("/posts/see/{id}")
+    public  String postsSee(@PathVariable Long id,Model model){
+        CommentAndPostResponseDto dto =postsService.findById(id);
+
+        model.addAttribute("see",dto);
+        return "post-see";
+    }
+    /*@GetMapping("/posts/see/{id}")
     public String postsSee(@PathVariable Long id,Model model){
-        PostsResponseDto dto =postsService.findById(id);
+        CommentAndPostResponseDto dto =postsService.findById(id);
+        *//*PostsResponseDto dto =postsService.findById(id);*//*
         model.addAttribute("see",dto);
 
         return "post-see";
 
-    }
+    }*/
 
 
 }

@@ -33,12 +33,10 @@ public class Posts extends BaseTimeEntity {
     @Column(nullable = false)
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "USER_ID", nullable = false)
+//    private User user;
 
-    @OneToMany(mappedBy = "post", cascade =CascadeType.REMOVE, orphanRemoval = true)
-    private final List<Comment> commentList = new ArrayList<>();
 
      //빌더를 생성자 위에 적용할경우... 생성자에 포함된 필드만 빌더에 포함..
     public  Posts(PostsSaveRequestDto requestDto, Long userId, String username){

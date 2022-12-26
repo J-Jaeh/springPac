@@ -1,6 +1,7 @@
 package com.example.springpac.web.controller;
 
 import com.example.springpac.sevice.posts.PostsService;
+import com.example.springpac.web.dto.CommentAndPostResponseDto;
 import com.example.springpac.web.dto.post.PostDeleteRequestDto;
 import com.example.springpac.web.dto.post.PostsResponseDto;
 import com.example.springpac.web.dto.post.PostsSaveRequestDto;
@@ -27,8 +28,9 @@ public class PostsApiController {
         return postsService.update(id, requestDto,request);
     }
     @GetMapping("/api/v1/posts/{id}")
-    public PostsResponseDto findById (@PathVariable Long id){
-        return postsService.findById(id);
+    public CommentAndPostResponseDto findById (@PathVariable Long id){
+
+        return postsService.findById(id);  //포스트id에 해당하는 댓글을 가져오면됨  포스트 서비스 건들면 되겠네 ?
     }
 
 

@@ -17,12 +17,12 @@ public class CommentController  {
 
     private  final CommentService commentService;
 
-    @PostMapping("/api/v1/comment/save")
-    public CommentResponseDto save(@RequestBody CommentSaveRequestDto requestDto, HttpServletRequest request){
+    @PostMapping("/api/v1/posts/{id}/comment/save")
+    public CommentResponseDto save(@RequestBody CommentSaveRequestDto requestDto, HttpServletRequest request,@PathVariable Long id){
 
-        return commentService.save(requestDto,request);
+        return commentService.save(requestDto,request,id);
     }
-      //인덱스 컨트롤러로
+      //인덱스 컨트롤러로 아...포스트 조회에 통합하면됨
     /*@GetMapping("/api/v1/comment/{id}")
     public String showComment(Model model,@PathVariable Long id){
         model.addAttribute("comment",commentService.findByIdAndComment(id));

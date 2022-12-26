@@ -1,11 +1,14 @@
 package com.example.springpac.sevice.posts;
 
 import ch.qos.logback.classic.spi.IThrowableProxy;
+import com.example.springpac.domain.comment.entity.Comment;
+import com.example.springpac.domain.comment.repository.CommentRepository;
 import com.example.springpac.domain.posts.entity.Posts;
 import com.example.springpac.domain.posts.repository.PostsRepository;
 import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
+import com.example.springpac.web.dto.CommentAndPostResponseDto;
 import com.example.springpac.web.dto.post.*;
 import io.jsonwebtoken.Claims;
 import lombok.Getter;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +28,8 @@ import java.util.stream.Collectors;
 public class PostsService {
     private final PostsRepository postsRepository;
     private final UserRepository userRepository;
+
+    private final CommentRepository commentRepository;
     private final JwtUtil jwtUtil;
 
     @Transactional
@@ -73,10 +79,10 @@ public class PostsService {
              throw new RuntimeException("로그인을 안해서 실패란다!");
     }
 
-            public PostsResponseDto findById (Long id){
+            public CommentAndPostResponseDto findById (Long id){ //여기서 추가해야할게 뭐냐 댓글을 가져오는거 추가시켜주면 되자나
                 Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
-
-                return new PostsResponseDto(entity);
+                ArrayList<Comment> commentArrayList = commentRepository.findByPostIdOrderByCreatedDateDesc(id);
+                return new CommentAndPostResponseDto(entity,commentArrayList);
             }
 
 

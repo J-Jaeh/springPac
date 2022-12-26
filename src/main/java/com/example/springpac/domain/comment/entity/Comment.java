@@ -34,14 +34,10 @@ public class Comment  extends BaseTimeEntity {
     private Long userId; //댓글 작성자를 알기 위한
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POST_ID", nullable = false)
-    private Posts posts;
 
-
-    public Comment(CommentSaveRequestDto requestDto,Long userId,String username){
+    public Comment(CommentSaveRequestDto requestDto,Long userId,String username,Long postId){
         this.comment = requestDto.getComment();
-        this.postId = requestDto.getPostId();
+        this.postId = postId;
         this.author = username;
         this.userId = userId;
     }  //요청 dto에 들어있는것은 ? 글번호  내용 //토큰에는 유저네임들어있음

@@ -11,11 +11,11 @@ public class CommentSaveRequestDto {
     private String comment;
     private String author;
 
-    private Long postId;
+
 
     @Builder
-    CommentSaveRequestDto(String comment, String author,Long postId){
-        this.postId = postId;
+    CommentSaveRequestDto(String comment, String author){
+
         this.comment = comment;
         this.author = author;
     }

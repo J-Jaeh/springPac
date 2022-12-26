@@ -39,8 +39,8 @@ public class User extends BaseTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user",cascade =CascadeType.REMOVE, orphanRemoval = true)
-    private final List<Posts> postsList = new ArrayList<>();
+  /*  @OneToMany(mappedBy = "user",cascade =CascadeType.REMOVE, orphanRemoval = true)
+    private final List<Posts> postsList = new ArrayList<>();*/
 
 
     @Builder

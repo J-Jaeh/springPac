@@ -32,7 +32,7 @@ public class CommentService {
     private final JwtUtil jwtUtil;
 
     @Transactional   //포스트 아이디를 받아와야함... 쓰바 그래야...포스트 조회가능..?
-    public CommentResponseDto save(CommentSaveRequestDto requestDto, HttpServletRequest request) {
+    public CommentResponseDto save(CommentSaveRequestDto requestDto, HttpServletRequest request,Long postId) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
         if (token != null) {
@@ -44,7 +44,7 @@ public class CommentService {
 
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
 
-            Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, user.getId(), user.getUsername()));
+            Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, user.getId(), user.getUsername(),postId));
 
             return new CommentResponseDto(comment);
 
@@ -54,6 +54,6 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentsListResponseDto> findAllByPostIdOrderByCreatedDateDesc(Long postId){
-        return commentRepository.findAllByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+        return commentRepository.findByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
     }
 }

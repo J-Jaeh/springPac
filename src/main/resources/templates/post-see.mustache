@@ -39,7 +39,6 @@
     <table class="table table-horizontal table-bordered">
         <thead class="thead-strong">
         <tr>
-            <th>코멘트번호</th>
             <th>코멘트</th>
             <th>작성자</th>
             <th>최종수정일</th>
@@ -48,16 +47,15 @@
         </tr>
         </thead>
         <tbody id="tbody">
-        {{#comments}}
+        {{#see.comment}}
             <tr>
-                <td>{{id}}</td>
                 <td>{{comment}}</td>
                 <td>{{author}}</td>
                 <td>{{modifiedDate}}</td>
-                <th><a>수정</a>></th>
+                <th><a>수정</a></th>
                 <th><a>삭제</a></th>
             </tr>
-        {{/comments}}
+        {{/see.comment}}
         </tbody>
     </table>
 </div>
