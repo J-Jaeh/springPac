@@ -23,9 +23,9 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts/{id}")
-    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto ,HttpServletRequest request){
-
-        return postsService.update(id, requestDto,request);
+    public String update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto ,HttpServletRequest request){
+        postsService.update(id, requestDto,request);
+        return "게시글 수정에 성공했습니다";
     }
     @GetMapping("/api/v1/posts/{id}")
     public CommentAndPostResponseDto findById (@PathVariable Long id){

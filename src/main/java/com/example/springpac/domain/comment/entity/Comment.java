@@ -5,6 +5,8 @@ import com.example.springpac.domain.posts.entity.BaseTimeEntity;
 import com.example.springpac.domain.posts.entity.Posts;
 import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
+import com.example.springpac.web.dto.comment.CommentUpdateRequestDto;
+import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,4 +43,7 @@ public class Comment  extends BaseTimeEntity {
         this.author = username;
         this.userId = userId;
     }  //요청 dto에 들어있는것은 ? 글번호  내용 //토큰에는 유저네임들어있음
+    public void update(CommentUpdateRequestDto requestDto){
+        this.comment= requestDto.getContent();
+    }
 }

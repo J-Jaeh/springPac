@@ -6,6 +6,7 @@ import com.example.springpac.sevice.posts.CommentService;
 import com.example.springpac.web.dto.comment.CommentDeleteRequestDto;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
+import com.example.springpac.web.dto.comment.CommentUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,13 @@ public class CommentController  {
 
         commentService.delete(request,requestDto);
     return "댓글삭제에 성공했습니다";
+    }
+
+    @PutMapping("/api/v1/posts/{id}/comment")
+    public String update(HttpServletRequest request, @RequestBody CommentUpdateRequestDto requestDto){
+
+
+     return commentService.update(requestDto,request);
     }
 
 }
