@@ -6,9 +6,11 @@ import com.example.springpac.domain.posts.repository.PostsRepository;
 import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
+import com.example.springpac.web.dto.comment.CommentDeleteRequestDto;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
 import com.example.springpac.web.dto.comment.CommentsListResponseDto;
+import com.example.springpac.web.dto.post.PostDeleteRequestDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,5 +57,22 @@ public class CommentService {
     @Transactional(readOnly = true)
     public List<CommentsListResponseDto> findAllByPostIdOrderByCreatedDateDesc(Long postId){
         return commentRepository.findByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+    }
+    @Transactional
+    public void delete(HttpServletRequest request , CommentDeleteRequestDto requestDto) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+            if (requestDto.getUsername().equals(claims.getSubject())){
+                commentRepository.delete(commentRepository.findById(requestDto.getCommentId()).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. id=" + requestDto.getCommentId())));
+            }else
+                throw new RuntimeException("글 작성자가 아니라서 실패란다!");
+        }else
+            throw new RuntimeException("삭제 실패란다!");
     }
 }

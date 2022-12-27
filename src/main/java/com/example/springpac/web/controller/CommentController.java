@@ -3,6 +3,7 @@ package com.example.springpac.web.controller;
 
 import com.example.springpac.sevice.posts.CommentService;
 
+import com.example.springpac.web.dto.comment.CommentDeleteRequestDto;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class CommentController  {
 
     private  final CommentService commentService;
 
-    @PostMapping("/api/v1/posts/{id}/comment/save")
+    @PostMapping("/api/v1/posts/{id}/comment")
     public CommentResponseDto save(@RequestBody CommentSaveRequestDto requestDto, HttpServletRequest request,@PathVariable Long id){
 
         return commentService.save(requestDto,request,id);
@@ -29,5 +30,14 @@ public class CommentController  {
 
         return "post-see";
     }*/
+    //삭제버튼에 댓글 id를 심어놓아서 json으로 전송..? 그럼 여기서 어떻게 받지 리퀘스트 바디로 받지
+    //댓글작성자의 이름은 requestDto에 담기는거 맞지 ?!
+
+    @DeleteMapping("/api/v1/posts/{id}/comment")
+    public String deleteComment( HttpServletRequest request, @RequestBody CommentDeleteRequestDto requestDto){
+
+        commentService.delete(request,requestDto);
+    return "댓글삭제에 성공했습니다";
+    }
 
 }
