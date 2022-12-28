@@ -1,7 +1,6 @@
 package com.example.springpac.web.dto.comment;
 
 import com.example.springpac.domain.comment.entity.Comment;
-import com.example.springpac.web.dto.post.PostsListResponseDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

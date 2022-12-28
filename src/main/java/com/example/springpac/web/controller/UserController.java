@@ -3,8 +3,8 @@ package com.example.springpac.web.controller;
 
 
 import com.example.springpac.jwt.JwtUtil;
-import com.example.springpac.sevice.posts.PostsService;
-import com.example.springpac.sevice.posts.UserService;
+import com.example.springpac.sevice.PostsService;
+import com.example.springpac.sevice.UserService;
 import com.example.springpac.web.dto.login.LoginRequestDto;
 import com.example.springpac.web.dto.login.SignupRequestDto;
 import lombok.RequiredArgsConstructor;

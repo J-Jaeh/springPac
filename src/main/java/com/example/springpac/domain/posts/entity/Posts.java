@@ -1,7 +1,5 @@
 package com.example.springpac.domain.posts.entity;
 
-import com.example.springpac.domain.comment.entity.Comment;
-import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.web.dto.post.PostsSaveRequestDto;
 import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import lombok.Getter;
@@ -10,8 +8,6 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Getter

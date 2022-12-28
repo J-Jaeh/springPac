@@ -1,14 +1,13 @@
 package com.example.springpac.web.controller;
 
 
-import com.example.springpac.sevice.posts.CommentService;
+import com.example.springpac.sevice.CommentService;
 
+import com.example.springpac.web.dto.comment.CommentUpdateRequestDto;
 import com.example.springpac.web.dto.comment.CommentDeleteRequestDto;
 import com.example.springpac.web.dto.comment.CommentResponseDto;
 import com.example.springpac.web.dto.comment.CommentSaveRequestDto;
-import com.example.springpac.web.dto.comment.CommentUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

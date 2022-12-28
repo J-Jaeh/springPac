@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
-    ArrayList<Comment> findByPostIdOrderByCreatedDateDesc(Long postId);
+    ArrayList<Comment> findByPostsIdOrderByCreatedDateDesc(Long postId);
+
+    ArrayList<Comment> deleteByPostsId(Long postId);
 
 }

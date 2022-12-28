@@ -1,4 +1,4 @@
-package com.example.springpac.sevice.posts;
+package com.example.springpac.sevice;
 
 
 

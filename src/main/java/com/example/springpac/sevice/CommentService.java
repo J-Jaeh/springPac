@@ -1,4 +1,4 @@
-package com.example.springpac.sevice.posts;
+package com.example.springpac.sevice;
 
 import com.example.springpac.domain.comment.entity.Comment;
 import com.example.springpac.domain.comment.repository.CommentRepository;
@@ -8,8 +8,6 @@ import com.example.springpac.domain.user.entity.User;
 import com.example.springpac.domain.user.repository.UserRepository;
 import com.example.springpac.jwt.JwtUtil;
 import com.example.springpac.web.dto.comment.*;
-import com.example.springpac.web.dto.post.PostDeleteRequestDto;
-import com.example.springpac.web.dto.post.PostsUpdateRequestDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,8 +30,8 @@ public class CommentService {
 
     private final JwtUtil jwtUtil;
 
-    @Transactional   //포스트 아이디를 받아와야함... 쓰바 그래야...포스트 조회가능..?
-    public CommentResponseDto save(CommentSaveRequestDto requestDto, HttpServletRequest request,Long postId) {
+    @Transactional   //포스트 아이디를 받아와야함... 그래야...포스트 조회가능..?
+    public CommentResponseDto save(CommentSaveRequestDto requestDto, HttpServletRequest request, Long postsId) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
         if (token != null) {
@@ -43,9 +41,12 @@ public class CommentService {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
+            /*User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));*/
 
-            Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, user.getId(), user.getUsername(),postId));
+            Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, claims.getSubject(),postsId));
+           /* 밑 두줄은 동일하다 comment.getPosts();
+              Posts posts = postsRepository.findById(comment.getPostsId()); //커맨트안에.. 포스트가있냐.. 포스트ID가있냐..차이..?*/
+
 
             return new CommentResponseDto(comment);
 
@@ -54,8 +55,8 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<CommentsListResponseDto> findAllByPostIdOrderByCreatedDateDesc(Long postId){
-        return commentRepository.findByPostIdOrderByCreatedDateDesc(postId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+    public List<CommentsListResponseDto> findAllByPostIdOrderByCreatedDateDesc(Long postsId){
+        return commentRepository.findByPostsIdOrderByCreatedDateDesc(postsId).stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
     }
     @Transactional
     public void delete(HttpServletRequest request , CommentDeleteRequestDto requestDto) {
@@ -84,10 +85,10 @@ public class CommentService {
             } else {
                 throw new IllegalArgumentException("Token Error");
             }
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));
+            /*User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));*/
             Comment comment = commentRepository.findById(requestDto.getPostId()).orElseThrow(() -> new IllegalArgumentException("해당 댓글 없습니다. id =" + requestDto.getPostId()));
 
-            if ((user.getUsername().equals(requestDto.getAuthor()))){   //유저레포에 있는 이름이 Dto에 담긴 이름과 동일하다면 작성자확인완료
+            if ((claims.getSubject().equals(requestDto.getAuthor()))){   //유저레포에 있는 이름이 Dto에 담긴 이름과 동일하다면 작성자확인완료
 
                 comment.update(requestDto);
 
