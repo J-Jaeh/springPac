@@ -5,22 +5,21 @@
 <div id="login-form">
     <div id="login-title">회원가입하세요!</div>
 
-    <form method="POST" action="/api/user/signup">
+    <!--<form >-->
         <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="Username" class="login-input-box">
+        <input type="text" name="username" placeholder="Username" class="login-input-box" id="signup-id">
 
         <div class="login-id-label">Password</div>
-        <input type="password" name="password" class="login-input-box">
+        <input type="password" name="password" class="login-input-box" id="signup-password">
 
         <div class="login-id-label">E-mail</div>
-        <input type="text" name="email" placeholder="E-mail" class="login-input-box">
-
+        <input type="text" name="email" placeholder="E-mail" class="login-input-box" id="signup-email">
         <div>
             <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
             <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
         </div>
-        <button id="login-id-submit2">회원 가입</button>
-    </form>
+        <button id="login-id-submit" onclick="signup()">회원 가입</button>
+    <!--</form>-->
 </div>
 
 

@@ -44,8 +44,7 @@ public class CommentService {
             /*User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다"));*/
 
             Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, claims.getSubject(),postsId));
-           /* 밑 두줄은 동일하다 comment.getPosts();
-              Posts posts = postsRepository.findById(comment.getPostsId()); //커맨트안에.. 포스트가있냐.. 포스트ID가있냐..차이..?*/
+
 
 
             return new CommentResponseDto(comment);

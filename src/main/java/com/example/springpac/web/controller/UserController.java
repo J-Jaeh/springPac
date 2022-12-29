@@ -33,10 +33,11 @@ public class UserController {
         return new ModelAndView("login");
     }
 
+    @ResponseBody
     @PostMapping("/signup")
     public String signup(@RequestBody SignupRequestDto signupRequestDto){
         userService.signup(signupRequestDto);
-        return  "redirect:/api/user/login";
+        return  "success";
     }
    /* @PostMapping("/login")
     public String login(LoginRequestDto loginRequestDto) {

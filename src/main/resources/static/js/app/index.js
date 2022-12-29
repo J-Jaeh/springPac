@@ -207,3 +207,36 @@ function logout() {
         'Authorization' + '=' + '' + ';path=/';
     window.location.reload();
 }
+
+function signup(){
+    let username = $('#signup-id').val();
+    let password = $('#signup-password').val();
+    let email =$('#signup-email').val();
+
+    if (username == '') {
+        alert('ID를 입력해주세요');
+        return;
+    } else if(password== '') {
+        alert('비밀번호를 입력해주세요');
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: `/api/user/signup`,
+        contentType: "application/json",
+        data: JSON.stringify({username: username, password: password ,email: email}),
+
+        success: function (response) {
+            if(response === 'success') {
+                let host = window.location.host;
+                let url = host + '/api/user/login';
+                window.location.href = 'http://' + url;
+            } else {
+                alert('조건만족실패')
+                window.location.reload();
+            }
+        }
+    })
+
+}
