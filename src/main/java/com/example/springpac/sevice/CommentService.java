@@ -45,8 +45,6 @@ public class CommentService {
 
             Comment comment = commentRepository.saveAndFlush(new Comment(requestDto, claims.getSubject(),postsId));
 
-
-
             return new CommentResponseDto(comment);
 
         } else
